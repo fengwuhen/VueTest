@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import mixin from '../mixin'
 import ElementUI from 'element-ui'
-// import './api/axios'
+import './api/axios'
 
 
 // css样式
