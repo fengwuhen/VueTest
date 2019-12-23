@@ -1,12 +1,12 @@
 import axios from 'axios'
 import {
     getToken
-} from 'lib/cookie'
+} from '../lib/cookie'
 import {
     Loading,
     Message
 } from 'element-ui'
-import server from 'config/server';
+import server from '../config/server';
 
 /**
  * 加载loading
