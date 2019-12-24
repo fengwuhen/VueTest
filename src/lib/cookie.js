@@ -13,12 +13,24 @@ export function getToken() {
 }
 
 /**
+ * 
  *
- * @param {token值} token
+ * @export
+ * @param {*} data
+ * @returns
+ */
+export function setToken(data) {
+    return this.setTokenTime(data, 7 * 24 * 60 * 60 * 1000);
+}
+
+
+/**
+ *
+ * @param {token值} data
  * @param {过期时间} time
  */
-export function setToken(token, time) {
-    return Cookies.set(TokenKey, token, {
+export function setTokenTime(data, time) {
+    return Cookies.set(TokenKey, data, {
         expires: time,
         path: '/'
     })

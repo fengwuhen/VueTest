@@ -42,6 +42,22 @@ const service = axios.create({
     },
     baseURL: server.host,
 });
+
+/**
+ * 创建测试service
+ */
+const service_test = axios.create({
+    timeout: 60000,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        "X-Requested-With": "XMLHttpRequest"
+    },
+    baseURL: server.test_host,
+});
+
+/**
+ * 创建form表单service
+ */
 const serviceForm = axios.create({
     timeout: 60000,
     headers: {
@@ -54,10 +70,10 @@ const serviceForm = axios.create({
 //http request 拦截器
 let request = function (config) {
     startLoading();
-    const token = getToken();
-    if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
-        config.headers.token = token;
-    }
+    // const token = getToken();
+    // if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
+    //     config.headers.token = token;
+    // }
     return config;
 };
 let request_err = function (err) {
@@ -69,7 +85,7 @@ let request_err = function (err) {
 let response = function (res) {
     endLoading();
     const json = res.data;
-    const message = `${json.errorCode}--${json.errorMsg}` || '未知错误'
+    const message = `${json.errorMsg}` || '未知错误'
     if (res.status == 200) {
         if (json.errorCode == 0) {
             return json;
@@ -86,7 +102,7 @@ let response_err = function (err) {
     endLoading();
     if (err.response) {
         const json = err.response.data;
-        const message = `${err.response.status}--${err.response.statusText}` || '未知错误'
+        const message = `${err.response.errorMsg}` || '未知错误'
         Message({
             message: message,
             type: 'error',
@@ -101,5 +117,11 @@ serviceForm.interceptors.request.use(request, request_err);
 service.interceptors.response.use(response, response_err);
 serviceForm.interceptors.response.use(response, response_err);
 
+
+service_test.interceptors.request.use(request, request_err);
+service_test.interceptors.response.use(response, response_err);
+
+
 window.service = service;
 window.serviceForm = serviceForm;
+window.service_test = service_test;

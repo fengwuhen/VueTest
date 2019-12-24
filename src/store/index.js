@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import demo from './demo'
+import config from '../config/server'
 
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    web_site_name: '系统后台',
+    web_site_name: config.system_name,
   },
   getters: {
     web_site_name: (state) => state.web_site_name,

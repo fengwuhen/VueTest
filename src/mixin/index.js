@@ -7,10 +7,13 @@ export default {
         return {}
     },
     computed: {
-        ...mapGetters(['moduleTip','web_site_name'])
+        ...mapGetters(['moduleTip', 'web_site_name'])
     },
     created() {
-        alert('全局混乱引入成功')
+
+    },
+    mounted() {
+        // alert('全局混乱引入成功');
     },
     methods: {}
 }
