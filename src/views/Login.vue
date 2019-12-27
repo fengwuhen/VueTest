@@ -21,15 +21,15 @@
         style="width:48%;"
         @click.native.prevent="login"
         :loading="logining"
-      >登 录</el-button>
+      >{{$t('common.login')}}</el-button>
 
-      <el-button type="info" style="width:48%;" @click.native.prevent="reset">重 置</el-button>
+      <el-button type="info" style="width:48%;" @click.native.prevent="reset">{{$t('action.reset')}}</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import login from "../api/login";
+import api from "../api/login";
 import * as Cookies from "../lib/cookie";
 import qs from "qs";
 
@@ -55,7 +55,7 @@ export default {
         username: this.loginForm.account,
         password: this.loginForm.password
       };
-      login
+      api
         .login(qs.stringify(userInfo))
         .then(res => {
           Cookies.setToken(res.data.username); // 放置token到Cookie

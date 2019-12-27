@@ -1,26 +1,39 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import demo from './demo'
-import config from '../config/server'
+import demo from './modules/demo'
 
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    web_site_name: config.system_name,
+    isCollapse: false,
+    themeColor: "#545c64",
+    oldThemeColor: "#545c64",
   },
   getters: {
-    web_site_name: (state) => state.web_site_name,
+    isCollapse: (state) => state.isCollapse,
+    themeColor: (state) => state.themeColor,
+    oldThemeColor: (state) => state.oldThemeColor,
   },
   mutations: {
-    SET_WEB_SITE_NAME(state, data) {
-      state.web_site_name = data;
+    onCollapse(state, data) {
+      state.isCollapse = data;
     },
+    themeColor(state, data) {
+      state.themeColor = data;
+    },
+    oldThemeColor(state, data) {
+      state.oldThemeColor = data;
+    }
   },
   actions: {
-    SET_WEB_SITE_NAME(context, data) {
-      context.commit('SET_WEB_SITE_NAME', data)
+    onCollapse(context, data) {
+      context.commit('onCollapse', data);
+    },
+    onThemeChange(context, data) {
+      context.commit("themeColor", data.themeColor);
+      context.commit("oldThemeColor", data.oldThemeColor);
     }
   },
   modules: {

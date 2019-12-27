@@ -34,7 +34,32 @@ const routes = [{
     component: loadView('Home.vue'),
     meta: {
       title: config.system_name
-    }
+    },
+    children: [{
+        path: '/user',
+        name: 'user',
+        component: loadView('Menu/User.vue')
+      },
+      {
+        path: '/dept',
+        name: 'dept',
+        component: loadView('Menu/Dept.vue')
+      },
+      {
+        path: '/role',
+        name: 'role',
+        component: loadView('Menu/Role.vue')
+      },
+      {
+        path: '/menu',
+        name: 'menu',
+        component: loadView('Menu/Menu.vue')
+      }, {
+        path: '/log',
+        name: 'log',
+        component: loadView('Menu/Log.vue')
+      },
+    ]
   },
   {
     path: '/about',

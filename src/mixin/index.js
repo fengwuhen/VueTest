@@ -7,7 +7,7 @@ export default {
         return {}
     },
     computed: {
-        ...mapGetters(['moduleTip', 'web_site_name'])
+        ...mapGetters(["moduleTip", "isCollapse", "themeColor", "oldThemeColor"])
     },
     created() {
 
