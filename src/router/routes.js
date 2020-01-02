@@ -1,4 +1,3 @@
-import config from '../config/server'
 
 /**
  * 加载src下的组件
@@ -33,7 +32,7 @@ const routes = [{
     name: 'home',
     component: loadView('Home.vue'),
     meta: {
-      title: config.system_name
+      title: 'action.reset'
     },
     children: [{
         path: '/user',
@@ -64,7 +63,10 @@ const routes = [{
   {
     path: '/about',
     name: 'about',
-    component: loadView('About.vue')
+    component: loadView('About.vue'),
+    meta: {
+      title: 'common.home'
+    },
   },
   {
     path: '/login',

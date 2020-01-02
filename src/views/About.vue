@@ -1,16 +1,16 @@
 <template>
   <el-container>
     <!-- 头部区域 -->
-    <el-header :style="{'background':themeColor}">
+    <el-header :style="{ background: themeColor }">
       <Header></Header>
     </el-header>
     <el-container>
       <!-- 导航菜单栏 -->
-      <el-aside width="200px">
+      <el-aside :width="!isCollapse ? '200px' : '70px'">
         <LeftBar></LeftBar>
       </el-aside>
       <!-- 主内容区域 -->
-      <el-main>
+      <el-main :class="!isCollapse ? 'el-main' : 'el-content'">
         <MainContent></MainContent>
       </el-main>
     </el-container>
@@ -23,8 +23,7 @@ import MainContent from "./Main/Main";
 
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   components: {
     Header,
@@ -64,11 +63,21 @@ export default {
   left: 0px;
   right: 0px;
 }
+
 .el-main {
   position: absolute;
   top: 60px;
   bottom: 0px;
   left: 200px;
+  right: 0px;
+  padding: 5px;
+}
+
+.el-content {
+  position: absolute;
+  top: 60px;
+  bottom: 0px;
+  left: 70px;
   right: 0px;
   padding: 5px;
 }
@@ -80,4 +89,4 @@ export default {
 .el-aside .el-menu {
   border-right: none;
 }
-</style>  
+</style>
