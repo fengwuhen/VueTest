@@ -2,7 +2,7 @@
   <div class="container">
     <el-breadcrumb separator="/" class="breadcrumb">
       <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
-        <a href="www.baidu.com">{{ item.name }}</a>
+        {{ $t(item.meta.title) }}
       </el-breadcrumb-item>
     </el-breadcrumb>
     <transition name="fade" mode="out-in">

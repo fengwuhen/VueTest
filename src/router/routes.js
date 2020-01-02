@@ -32,31 +32,47 @@ const routes = [{
     name: 'home',
     component: loadView('Home.vue'),
     meta: {
-      title: 'action.reset'
+      title: 'common.home'
     },
     children: [{
         path: '/user',
         name: 'user',
-        component: loadView('Menu/User.vue')
+        component: loadView('Menu/User.vue'),
+        meta:{
+          title:'sys.userMng'
+        }
       },
       {
         path: '/dept',
         name: 'dept',
-        component: loadView('Menu/Dept.vue')
+        component: loadView('Menu/Dept.vue'),
+        meta:{
+          title:'sys.deptMng'
+        }
       },
       {
         path: '/role',
         name: 'role',
-        component: loadView('Menu/Role.vue')
+        component: loadView('Menu/Role.vue'),
+        meta:{
+          title:'sys.roleMng'
+        }
       },
       {
         path: '/menu',
         name: 'menu',
-        component: loadView('Menu/Menu.vue')
-      }, {
+        component: loadView('Menu/Menu.vue'),
+        meta:{
+          title:'sys.menuMng'
+        }
+      }, 
+      {
         path: '/log',
         name: 'log',
-        component: loadView('Menu/Log.vue')
+        component: loadView('Menu/Log.vue'),
+        meta:{
+          title:'sys.logMng'
+        }
       },
     ]
   },
@@ -71,7 +87,10 @@ const routes = [{
   {
     path: '/login',
     name: 'login',
-    component: loadView('Login.vue')
+    component: loadView('Login.vue'),
+    meta:{
+      title:'common.loginLogo'
+    }
   },
   {
     path: '*',
