@@ -2,27 +2,32 @@
   <div class="header">
     <div class="logo">
       <img @click.prevent="onCollapse" :src="this.logo" />
-      <div class="logo-title">{{$t("common.webName")}}</div>
+      <div class="logo-title">{{ $t("common.webName") }}</div>
     </div>
     <div class="userinfo">
       <!-- 用户信息 -->
       <el-dropdown trigger="hover">
         <span class="el-dropdown-link">
           <div class="avatar">
-            <div class="username">{{userName}}</div>
+            <div class="username">{{ userName }}</div>
             <el-avatar :src="this.userAvatar"></el-avatar>
           </div>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>{{$t("common.myMsg")}}</el-dropdown-item>
-          <el-dropdown-item>{{$t("common.config")}}</el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">{{$t("common.logout")}}</el-dropdown-item>
+          <el-dropdown-item>{{ $t("common.myMsg") }}</el-dropdown-item>
+          <el-dropdown-item>{{ $t("common.config") }}</el-dropdown-item>
+          <el-dropdown-item divided @click.native="logout">{{
+            $t("common.logout")
+          }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
     <div class="theme">
       <!-- 主题切换 -->
-      <ThemePicker class="theme-picker" @onThemeChange="onThemeChange"></ThemePicker>
+      <ThemePicker
+        class="theme-picker"
+        @onThemeChange="onThemeChange"
+      ></ThemePicker>
       <!-- 语言切换 -->
       <LangSelector class="lang-selector"></LangSelector>
     </div>
@@ -81,6 +86,7 @@ export default {
 .header {
   padding-left: 20px;
   padding-right: 20px;
+  color: white;
 
   .logo {
     float: left;
@@ -101,6 +107,9 @@ export default {
   .theme,
   .userinfo {
     float: right;
+  }
+  .el-dropdown {
+    color: white;
   }
   .theme-picker,
   .lang-selector {
