@@ -41,6 +41,8 @@
         "roleMng": "Role Manage",
         "menuMng": "Menu Manage",
         "logMng": "Log Manage",
-        "sysMonitor": "System Monitor"
+        "newsMng": "News Manage",
+        "sysMonitor": "System Monitor",
+        "DictMng":"Dict Manage"
     }
 }

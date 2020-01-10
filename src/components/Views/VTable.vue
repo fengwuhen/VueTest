@@ -2,14 +2,14 @@
   <div>
     <!--表格栏-->
     <el-table
-      :data="data.content"
+      :data="data.list"
       stripe
+      border
       highlight-current-row
       @selection-change="selectionChange"
       :v-loading="loading"
       :max-height="maxHeight"
       :size="size"
-      :align="align"
       style="width:100%;"
     >
       <el-table-column type="selection" width="40"></el-table-column>
@@ -22,24 +22,22 @@
         :sortable="column.sortable"
         :fixed="column.fixed"
         :key="column.prop"
+        :align="column.align || 'center'"
         :type="column.type"
+        :formatter="column.formatter"
       >
       </el-table-column>
-      <el-table-column label="操作" width="150" fixed="right">
+      <el-table-column label="操作" width="150" fixed="right" align="center">
         <template slot-scope="scope">
-          <kt-button
-            label="编辑"
-            :perms="permsEdit"
-            :size="size"
-            @click="handleEdit(scope.$index, scope.row)"
-          />
-          <kt-button
-            label="删除"
-            :perms="permsDelete"
+          <el-button :size="size" @click="handleEdit(scope.$index, scope.row)"
+            >编辑</el-button
+          >
+          <el-button
             :size="size"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
-          />
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -57,9 +55,10 @@
       <el-pagination
         layout="total, sizes,prev, pager, next, jumper"
         @current-change="refreshPageRequest"
+        @size-change="sizePageRequest"
         :current-page="pageRequest.pageNum"
         :page-size="pageRequest.pageSize"
-        :total="data.totalSize"
+        :total="data.total"
         style="float:right;"
       >
       </el-pagination>
@@ -78,15 +77,10 @@ export default {
       type: String,
       default: "mini"
     },
-    align: {
-      // 文本对齐方式
-      type: String,
-      default: "left"
-    },
     maxHeight: {
       // 表格最大高度
       type: Number,
-      default: 420
+      default: 460
     }
   },
   data() {
@@ -114,6 +108,10 @@ export default {
       this.pageRequest.pageNum = pageNum;
       this.findPage();
     },
+    sizePageRequest: function(pageSize) {
+      this.pageRequest.pageSize = pageSize;
+      this.findPage();
+    },
     // 编辑
     handleEdit: function(index, row) {
       this.$emit("handleEdit", { index: index, row: row });
@@ -133,16 +131,18 @@ export default {
         type: "warning"
       })
         .then(() => {
-          let params = [];
-          let idArray = (ids + "").split(",");
-          for (var i = 0; i < idArray.length; i++) {
-            params.push({ id: idArray[i] });
-          }
           let callback = res => {
-            this.$message({ message: "删除成功", type: "success" });
+            this.$message({ message: "删除成功！", type: "success" });
             this.findPage();
           };
-          this.$emit("handleDelete", { params: params, callback: callback });
+          let failback = res => {
+            this.$message({ message: "删除失败！", type: "error" });
+          };
+          this.$emit("handleDelete", {
+            params: { ids: ids },
+            callback: callback,
+            failback: failback
+          });
         })
         .catch(() => {});
     }

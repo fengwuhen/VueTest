@@ -43,8 +43,8 @@
             auto-complete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="dataForm.name" auto-complete="off"></el-input>
+        <el-form-item label="账号" prop="account">
+          <el-input v-model="dataForm.account" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input
@@ -53,21 +53,8 @@
             auto-complete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="机构" prop="deptName">
-          <popup-tree-input
-            :data="deptData"
-            :props="deptTreeProps"
-            :prop="dataForm.deptName"
-            :nodeKey="'' + dataForm.deptId"
-            :currentChangeHandle="deptTreeCurrentChangeHandle"
-          >
-          </popup-tree-input>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="dataForm.email" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="手机" prop="mobile">
-          <el-input v-model="dataForm.mobile" auto-complete="off"></el-input>
+        <el-form-item label="名称" prop="username">
+          <el-input v-model="dataForm.username" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -85,6 +72,8 @@
 
 <script>
 import VTable from "../../components/Views/VTable";
+import api from "../../api/user";
+import qs from 'qs';
 
 export default {
   components: {
@@ -96,11 +85,10 @@ export default {
         name: ""
       },
       columns: [
-        { prop: "id", label: "ID", minWidth: 40, sortable: "false" },
-        { prop: "name", label: "用户名", minWidth: 120, sortable: "true" },
-        { prop: "deptName", label: "机构", minWidth: 120, sortable: "true" },
-        { prop: "email", label: "邮箱", minWidth: 120, sortable: "true" },
-        { prop: "mobile", label: "手机", minWidth: 120, sortable: "true" }
+        { prop: "id", label: "ID", minWidth: 150 },
+        { prop: "account", label: "账号", minWidth: 120 },
+        { prop: "password", label: "密码", minWidth: 120 },
+        { prop: "username", label: "名称", minWidth: 120 }
       ],
       pageRequest: { pageNum: 1, pageSize: 10 },
       pageResult: {},
@@ -113,18 +101,9 @@ export default {
       // 新增编辑界面数据
       dataForm: {
         id: 0,
-        name: "",
-        password: "123456",
-        deptId: 1,
-        deptName: "",
-        email: "test@qq.com",
-        mobile: "13889700023",
-        status: 1
-      },
-      deptData: [],
-      deptTreeProps: {
-        label: "name",
-        children: "children"
+        account: "",
+        password: "",
+        username: ""
       }
     };
   },
@@ -134,16 +113,29 @@ export default {
       if (data !== null) {
         this.pageRequest = data.pageRequest;
       }
-      this.pageRequest.columnFilters = {
-        name: { name: "name", value: this.filters.name }
-      };
-      this.$api.user.findPage(this.pageRequest).then(res => {
-        this.pageResult = res.data;
-      });
+      api
+        .list(
+          this.pageRequest.pageSize,
+          this.pageRequest.pageNum,
+          this.filters.name
+        )
+        .then(res => {
+          if (res.code == 0) {
+            this.pageResult = res.data;
+          } else {
+            this.$message({ message: "获取数据失败！", type: "error" });
+          }
+        });
     },
     // 批量删除
     handleDelete: function(data) {
-      this.$api.user.batchDelete(data.params).then(data.callback);
+      api.destroy(qs.stringify(data.params)).then(res => {
+        if (res.code == 0) {
+          data.callback();
+        } else {
+          data.failback();
+        }
+      });
     },
     // 显示新增界面
     handleAdd: function() {
@@ -151,13 +143,9 @@ export default {
       this.operation = true;
       this.dataForm = {
         id: 0,
-        name: "",
+        account: "",
         password: "",
-        deptId: 1,
-        deptName: "",
-        email: "test@qq.com",
-        mobile: "13889700023",
-        status: 1
+        username: ""
       };
     },
     // 显示编辑界面
@@ -172,22 +160,31 @@ export default {
         if (valid) {
           this.$confirm("确认提交吗？", "提示", {}).then(() => {
             this.editLoading = true;
-            let params = Object.assign({}, this.dataForm);
-            this.$api.user.save(params).then(res => {
-              this.editLoading = false;
-              this.$message({ message: "提交成功", type: "success" });
-              this.$refs["dataForm"].resetFields();
-              this.editDialogVisible = false;
-              this.findPage(null);
+            let params = qs.stringify(Object.assign({}, this.dataForm));
+            let request = this.operation
+              ? api.create(params)
+              : api.update(params);
+            request.then(res => {
+              if (res.code == 0) {
+                this.editLoading = false;
+                this.$message({ message: "提交成功！", type: "success" });
+                this.$refs["dataForm"].resetFields();
+                this.editDialogVisible = false;
+                this.findPage(null);
+              } else {
+                this.editLoading = false;
+                this.$message({
+                  message: "提交失败！" + res.msg,
+                  type: "error"
+                });
+              }
             });
           });
         }
       });
     }
   },
-  mounted() {
-    this.findDeptTree();
-  }
+  mounted() {}
 };
 </script>
 

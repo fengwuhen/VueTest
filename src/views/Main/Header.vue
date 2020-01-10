@@ -14,9 +14,9 @@
           </div>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>{{ $t("common.myMsg") }}</el-dropdown-item>
-          <el-dropdown-item>{{ $t("common.config") }}</el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">{{
+          <!-- <el-dropdown-item>{{ $t("common.myMsg") }}</el-dropdown-item>
+          <el-dropdown-item>{{ $t("common.config") }}</el-dropdown-item> -->
+          <el-dropdown-item @click.native="logout">{{
             $t("common.logout")
           }}</el-dropdown-item>
         </el-dropdown-menu>
@@ -75,7 +75,7 @@ export default {
     this.logo = require("../../assets/images/logo.png");
     var user = sessionStorage.getItem("user");
     if (user) {
-      this.userName = user;
+      this.userName = JSON.parse(user).username;
       this.userAvatar = require("../../assets/images/user.png");
     }
   }

@@ -41,6 +41,8 @@
         "roleMng": "角色管理",
         "menuMng": "菜单管理",
         "logMng": "日志管理",
-        "sysMonitor": "系统监控"
+        "newsMng": "新闻管理",
+        "sysMonitor": "系统监控",
+        "DictMng":"字典管理"
     }
 }

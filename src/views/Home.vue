@@ -6,7 +6,7 @@
     </el-header>
     <el-container>
       <!-- 导航菜单栏 -->
-      <el-aside :width="!isCollapse ? '200px' : '70px'">
+      <el-aside :width="!isCollapse ? '200px' : '70px'" :style="{ background: themeColor }">
         <LeftBar></LeftBar>
       </el-aside>
       <!-- 主内容区域 -->
@@ -80,10 +80,6 @@ export default {
   left: 70px;
   right: 0px;
   padding: 5px;
-}
-
-.el-aside {
-  background-color: #545c64;
 }
 
 .el-aside .el-menu {

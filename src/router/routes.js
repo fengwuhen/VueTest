@@ -30,6 +30,7 @@ const routes = [{
   {
     path: '/home',
     name: 'home',
+    redirect: '/user',
     component: loadView('Home.vue'),
     meta: {
       title: 'common.home'
@@ -73,6 +74,22 @@ const routes = [{
         meta:{
           title:'sys.logMng'
         }
+      },
+      {
+        path: '/news',
+        name: 'news',
+        component: loadView('Menu/News.vue'),
+        meta:{
+          title:'sys.newsMng'
+        }
+      },
+      {
+        path: '/dict',
+        name: 'dict',
+        component: loadView('Menu/Dict.vue'),
+        meta: {
+          title: 'sys.DictMng'
+        },
       },
     ]
   },

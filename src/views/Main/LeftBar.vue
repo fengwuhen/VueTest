@@ -1,50 +1,82 @@
 <template>
   <el-menu
-    default-active="1-1"
+    :default-active="onRoutes"
     class="el-menu-vertical-demo"
     :collapse="isCollapse"
     :collapse-transition="true"
     :unique-opened="false"
+    :default-openeds="defaultOpen"
     @open="handleopen"
     @close="handleclose"
     @select="handleselect"
+    router
   >
-    <el-submenu index="1">
-      <template slot="title">
-        <i class="el-icon-location"></i>
-        <span slot="title">{{$t("sys.sysMng")}}</span>
+    <!-- 一级菜单 -->
+    <template v-for="item in items">
+      <template v-if="item.subs">
+        <el-submenu :index="item.index" :key="item.index">
+          <template slot="title">
+            <i :class="item.icon"></i>
+            <span slot="title">{{ $t(item.title) }}</span>
+          </template>
+          <!-- 二级菜单 -->
+          <template v-for="subItem in item.subs">
+            <el-submenu
+              v-if="subItem.subs"
+              :index="subItem.index"
+              :key="subItem.index"
+            >
+              <template slot="title">
+                <i :class="subItem.icon"></i>{{ $t(subItem.title) }}
+              </template>
+              <!-- 三级菜单 -->
+              <el-menu-item
+                v-for="(threeItem, i) in subItem.subs"
+                :key="i"
+                :index="threeItem.index"
+                >{{ $t(threeItem.title) }}</el-menu-item
+              >
+            </el-submenu>
+            <!-- 不存在三级菜单 -->
+            <el-menu-item v-else :index="subItem.index" :key="subItem.index"
+              ><i :class="subItem.icon"></i
+              >{{ $t(subItem.title) }}</el-menu-item
+            >
+          </template>
+        </el-submenu>
       </template>
-      <el-menu-item index="1-1" @click="$router.push('user')">{{$t("sys.userMng")}}</el-menu-item>
-      <el-menu-item index="1-2" @click="$router.push('dept')">{{$t("sys.deptMng")}}</el-menu-item>
-      <el-menu-item index="1-3" @click="$router.push('role')">{{$t("sys.roleMng")}}</el-menu-item>
-      <el-menu-item index="1-4" @click="$router.push('menu')">{{$t("sys.menuMng")}}</el-menu-item>
-      <el-menu-item index="1-5" @click="$router.push('log')">{{$t("sys.logMng")}}</el-menu-item>
-    </el-submenu>
-    <el-submenu index="2">
-      <template slot="title">
-        <i class="el-icon-menu"></i>
-        <span slot="title">{{$t("sys.sysMonitor")}}</span>
+      <!-- 不存在二级菜单 -->
+      <template v-else>
+        <el-menu-item :index="item.index" :key="item.index">
+          <i :class="item.icon"></i>
+          <span slot="title">{{ $t(item.title) }}</span>
+        </el-menu-item>
       </template>
-      <el-menu-item index="2-1">{{$t("sys.userMng")}}</el-menu-item>
-      <el-menu-item index="2-2">{{$t("sys.deptMng")}}</el-menu-item>
-      <el-menu-item index="2-3">{{$t("sys.roleMng")}}</el-menu-item>
-      <el-menu-item index="2-4">{{$t("sys.menuMng")}}</el-menu-item>
-      <el-menu-item index="2-5">{{$t("sys.logMng")}}</el-menu-item>
-    </el-submenu>
+    </template>
   </el-menu>
 </template>
 
 <script>
+import menus from "../../config/menu";
+
 export default {
   data() {
-    return {};
+    return {
+      items: menus,
+      defaultOpen: []
+    };
   },
   methods: {
     handleopen() {},
     handleclose() {},
     handleselect(a, b) {}
   },
-  mounted() {}
+  mounted() {},
+  computed: {
+    onRoutes() {
+      return this.$route.path.replace("/", "");
+    }
+  }
 };
 </script>
 

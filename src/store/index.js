@@ -8,8 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isCollapse: false,
-    themeColor: "#545c64",
-    oldThemeColor: "#545c64",
+    themeColor: "#409EFF",
+    oldThemeColor: "#409EFF",
   },
   getters: {
     isCollapse: (state) => state.isCollapse,
