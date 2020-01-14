@@ -210,7 +210,6 @@ export default {
     },
     // 批量删除
     handleDelete: function(data) {
-      console.log(data.params);
       api.destroy(qs.stringify(data.params)).then(res => {
         if (res.code == 0) {
           data.callback();

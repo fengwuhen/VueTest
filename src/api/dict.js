@@ -6,7 +6,6 @@ const dict = {
     return service.post("dict/update", data);
   },
   destroy(data) {
-    console.log(data);
     return service.post(`dict/destroyMore`, data);
   },
   list(offset, limit, parentId, name) {
