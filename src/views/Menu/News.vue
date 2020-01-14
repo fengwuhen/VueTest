@@ -222,20 +222,6 @@ export default {
     handleAdd: function() {
       this.editDialogVisible = true;
       this.operation = true;
-      this.dataForm = {
-        id: 0,
-        title: "",
-        author: "",
-        source: "",
-        sectionid: "",
-        sectionname: "",
-        istop: "",
-        type: "",
-        summary: "",
-        content: "",
-        orden: "",
-        createcode: ""
-      };
     },
     // 显示编辑界面
     handleEdit: function(params) {
