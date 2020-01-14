@@ -14,20 +14,13 @@
           </div>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <!-- <el-dropdown-item>{{ $t("common.myMsg") }}</el-dropdown-item>
-          <el-dropdown-item>{{ $t("common.config") }}</el-dropdown-item> -->
-          <el-dropdown-item @click.native="logout">{{
-            $t("common.logout")
-          }}</el-dropdown-item>
+          <el-dropdown-item @click.native="logout">{{$t("common.logout")}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
     <div class="theme">
       <!-- 主题切换 -->
-      <ThemePicker
-        class="theme-picker"
-        @onThemeChange="onThemeChange"
-      ></ThemePicker>
+      <ThemePicker class="theme-picker" @onThemeChange="onThemeChange"></ThemePicker>
       <!-- 语言切换 -->
       <LangSelector class="lang-selector"></LangSelector>
     </div>

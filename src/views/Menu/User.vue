@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="width:100%;">
     <!--工具栏-->
-    <div class="toolbar" style="float:left; padding:18px;">
+    <div class="toolbar" style="float:left; padding-top:10px;">
       <el-form :inline="true" :model="filters" size="small">
         <el-form-item>
           <el-input v-model="filters.name" placeholder="用户名"></el-input>
@@ -21,8 +21,7 @@
       @findPage="findPage"
       @handleEdit="handleEdit"
       @handleDelete="handleDelete"
-    >
-    </v-table>
+    ></v-table>
     <!--新增编辑界面-->
     <el-dialog
       :title="operation ? '新增' : '编辑'"
@@ -34,24 +33,17 @@
         :model="dataForm"
         label-width="80px"
         :rules="dataFormRules"
+        size="small"
         ref="dataForm"
       >
         <el-form-item label="ID" prop="id">
-          <el-input
-            v-model="dataForm.id"
-            :disabled="true"
-            auto-complete="off"
-          ></el-input>
+          <el-input v-model="dataForm.id" :disabled="true" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="账号" prop="account">
           <el-input v-model="dataForm.account" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input
-            v-model="dataForm.password"
-            type="password"
-            auto-complete="off"
-          ></el-input>
+          <el-input v-model="dataForm.password" type="password" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="名称" prop="username">
           <el-input v-model="dataForm.username" auto-complete="off"></el-input>
@@ -59,12 +51,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="editDialogVisible = false">取消</el-button>
-        <el-button
-          type="primary"
-          @click.native="editSubmit"
-          :loading="editLoading"
-          >提交</el-button
-        >
+        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -73,7 +60,7 @@
 <script>
 import VTable from "../../components/Views/VTable";
 import api from "../../api/user";
-import qs from 'qs';
+import qs from "qs";
 
 export default {
   components: {
@@ -141,12 +128,6 @@ export default {
     handleAdd: function() {
       this.editDialogVisible = true;
       this.operation = true;
-      this.dataForm = {
-        id: 0,
-        account: "",
-        password: "",
-        username: ""
-      };
     },
     // 显示编辑界面
     handleEdit: function(params) {
@@ -164,21 +145,25 @@ export default {
             let request = this.operation
               ? api.create(params)
               : api.update(params);
-            request.then(res => {
-              if (res.code == 0) {
+            request
+              .then(res => {
+                if (res.code == 0) {
+                  this.editLoading = false;
+                  this.$message({ message: "提交成功！", type: "success" });
+                  this.$refs["dataForm"].resetFields();
+                  this.editDialogVisible = false;
+                  this.findPage(null);
+                } else {
+                  this.editLoading = false;
+                  this.$message({
+                    message: "提交失败！" + res.msg,
+                    type: "error"
+                  });
+                }
+              })
+              .catch(err => {
                 this.editLoading = false;
-                this.$message({ message: "提交成功！", type: "success" });
-                this.$refs["dataForm"].resetFields();
-                this.editDialogVisible = false;
-                this.findPage(null);
-              } else {
-                this.editLoading = false;
-                this.$message({
-                  message: "提交失败！" + res.msg,
-                  type: "error"
-                });
-              }
-            });
+              });
           });
         }
       });

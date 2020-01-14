@@ -1,12 +1,6 @@
 <template>
   <div class="tinymce-editor">
-    <editor
-      v-model="myValue"
-      :init="init"
-      :disabled="disabled"
-      @onClick="onClick"
-    >
-    </editor>
+    <editor v-model="myValue" :init="init" :disabled="disabled" @onClick="onClick"></editor>
   </div>
 </template>
 <script>
@@ -76,7 +70,7 @@ export default {
           form.append("files", blobInfo.blob(), blobInfo.filename());
           api.upload(form).then(res => {
             if (res.code == 0) {
-              success("http://localhost:7001"+res.data.path);
+              success("http://localhost:7001" + res.data.path);
             } else {
               this.$message({ message: "文件上传失败！", type: "error" });
             }

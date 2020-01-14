@@ -25,19 +25,11 @@
         :align="column.align || 'center'"
         :type="column.type"
         :formatter="column.formatter"
-      >
-      </el-table-column>
+      ></el-table-column>
       <el-table-column label="操作" width="150" fixed="right" align="center">
         <template slot-scope="scope">
-          <el-button :size="size" @click="handleEdit(scope.$index, scope.row)"
-            >编辑</el-button
-          >
-          <el-button
-            :size="size"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-            >删除</el-button
-          >
+          <el-button :size="size" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,8 +41,7 @@
         @click="handleBatchDelete()"
         :disabled="this.selections.length === 0"
         style="float:left;"
-        >批量删除</el-button
-      >
+      >批量删除</el-button>
 
       <el-pagination
         layout="total, sizes,prev, pager, next, jumper"
@@ -60,8 +51,7 @@
         :page-size="pageRequest.pageSize"
         :total="data.total"
         style="float:right;"
-      >
-      </el-pagination>
+      ></el-pagination>
     </div>
   </div>
 </template>

@@ -34,8 +34,11 @@
           :loading="logining"
           >{{ $t("common.login") }}</el-button
         >
-        <el-button type="info" style="width:48%;" @click.native.prevent="reset">
-          {{ $t("action.reset") }}</el-button
+        <el-button
+          type="info"
+          style="width:48%;"
+          @click.native.prevent="reset"
+          >{{ $t("action.reset") }}</el-button
         >
       </el-form-item>
     </el-form>
@@ -78,9 +81,11 @@ export default {
   },
   methods: {
     login() {
+      this.logining = true;
       api
         .login(qs.stringify(this.loginForm))
         .then(res => {
+          this.logining = false;
           if (res.code == 0) {
             Cookies.setToken(res.data.account); // 放置token到Cookie
             sessionStorage.setItem("user", JSON.stringify(res.data)); // 保存用户到本地会话
@@ -91,9 +96,6 @@ export default {
               type: "error"
             });
           }
-        })
-        .catch(err => {
-          alert(err);
         });
     },
     reset() {

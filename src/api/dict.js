@@ -1,4 +1,4 @@
-const news = {
+const dict = {
   create(data) {
     return service.post("dict/create", data);
   },
@@ -6,6 +6,7 @@ const news = {
     return service.post("dict/update", data);
   },
   destroy(data) {
+    console.log(data);
     return service.post(`dict/destroyMore`, data);
   },
   list(offset, limit, parentId, name) {
@@ -13,9 +14,11 @@ const news = {
       `dict/list/${offset}/${limit}?parentid=${parentId}&name=${name}`
     );
   },
-  lazy(parentId, name) {
-    return service.get(`dict/lazy?parentid=${parentId}&name=${name}`);
+  lazy(parentId, type, name) {
+    return service.get(
+      `dict/lazy?parentid=${parentId}&type=${type}&name=${name}`
+    );
   }
 };
 
-export default news;
+export default dict;

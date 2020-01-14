@@ -13,6 +13,9 @@ const news = {
   },
   upload(data) {
     return service.post("attach/create", data);
+  },
+  getType(data) {
+    return service.get(`dict/listByCode/${data}`);
   }
 };
 

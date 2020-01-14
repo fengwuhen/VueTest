@@ -63,7 +63,7 @@ const serviceForm = axios.create({
 });
 
 //http request 拦截器
-let request = function(config) {
+let request = function (config) {
   startLoading();
   // const token = getToken();
   // if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
@@ -71,12 +71,12 @@ let request = function(config) {
   // }
   return config;
 };
-let request_err = function(err) {
+let request_err = function (err) {
   return Promise.reject(err);
 };
 
 // http response 拦截器
-let response = function(res) {
+let response = function (res) {
   endLoading();
   const json = res.data;
   const message = `${json.msg}` || "未知错误";
@@ -90,11 +90,11 @@ let response = function(res) {
   }
 };
 
-let response_err = function(err) {
+let response_err = function (err) {
   endLoading();
   if (err.response) {
     const json = err.response.data;
-    const message = `${json.msg}` || "未知错误";
+    const message = `服务异常：${json.message}` || "未知错误";
     Message({
       message: message,
       type: "error"

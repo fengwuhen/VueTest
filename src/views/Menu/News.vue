@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="width:100%;">
     <!--工具栏-->
-    <div class="toolbar" style="float:left; padding:18px;">
+    <div class="toolbar" style="float:left; padding-top:10px;">
       <el-form :inline="true" :model="filters" size="small">
         <el-form-item>
           <el-input v-model="filters.title" placeholder="标题"></el-input>
@@ -21,8 +21,7 @@
       @findPage="findPage"
       @handleEdit="handleEdit"
       @handleDelete="handleDelete"
-    >
-    </v-table>
+    ></v-table>
     <!--新增编辑界面-->
     <el-dialog
       :title="operation ? '新增' : '编辑'"
@@ -33,6 +32,7 @@
       <el-form
         :model="dataForm"
         label-width="80px"
+        size="small"
         :rules="dataFormRules"
         ref="dataForm"
       >
@@ -74,11 +74,10 @@
               >
                 <el-option
                   v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
+                  :key="item.id"
+                  :label="item.name"
                   :value="item"
-                >
-                </el-option>
+                ></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -92,8 +91,7 @@
                 inactive-value="0"
                 active-text="开启"
                 inactive-text="关闭"
-              >
-              </el-switch>
+              ></el-switch>
             </el-form-item>
           </el-col>
         </el-row>
@@ -107,8 +105,10 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <tinymce-editor ref="editor" v-model="dataForm.content">
-          </tinymce-editor>
+          <tinymce-editor
+            ref="editor"
+            v-model="dataForm.content"
+          ></tinymce-editor>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -138,28 +138,7 @@ export default {
   },
   data() {
     return {
-      options: [
-        {
-          value: "1",
-          label: "黄金糕"
-        },
-        {
-          value: "2",
-          label: "双皮奶"
-        },
-        {
-          value: "3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "4",
-          label: "龙须面"
-        },
-        {
-          value: "5",
-          label: "北京烤鸭"
-        }
-      ],
+      options: [],
       filters: {
         title: ""
       },
@@ -204,8 +183,8 @@ export default {
   },
   methods: {
     currentSelect(select) {
-      this.dataForm.sectionid = select.value;
-      this.dataForm.sectionname = select.label;
+      this.dataForm.sectionid = select.id;
+      this.dataForm.sectionname = select.name;
     },
     formatTime(row, column, cellValue, index) {
       return dateUtils.dateFtt(cellValue);
@@ -293,9 +272,19 @@ export default {
           });
         }
       });
+    },
+    getNewsType() {
+      api.getType("NewsType").then(res => {
+        if (res.code == 0) {
+          this.options = res.data;
+        } else {
+        }
+      });
     }
   },
-  mounted() {}
+  mounted() {
+    this.getNewsType();
+  }
 };
 </script>
 
