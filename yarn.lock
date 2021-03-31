@@ -3165,9 +3165,10 @@ electron-to-chromium@^1.3.30, electron-to-chromium@^1.3.322:
   resolved "https://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.322.tgz#a6f7e1c79025c2b05838e8e344f6e89eb83213a8"
   integrity sha1-pvfhx5AlwrBYOOjjRPbonrgyE6g=
 
-"element-theme-chalk@https://github.com/ElementUI/theme-chalk":
-  version "2.13.0"
-  resolved "https://github.com/ElementUI/theme-chalk#10ec5a72da4b3b7d9f1509348440729f3058b300"
+element-theme-chalk@^2.13.0:
+  version "2.15.1"
+  resolved "https://registry.yarnpkg.com/element-theme-chalk/-/element-theme-chalk-2.15.1.tgz#8aba727d88dcc16913f9facc6333454fe06002d4"
+  integrity sha512-hswXLSSGZbeUtXPlhtuQec2wQopya/l2zjTOBUw9xqvk+8GmpGu/dNnMm0P7dDblyBGv0OZmB95785Eii7viqA==
 
 element-theme@^2.0.1:
   version "2.0.1"
@@ -9465,9 +9466,9 @@ xtend@~3.0.0:
   integrity sha1-XM50B7r2Qsunvs2laBEcST9ZZlo=
 
 y18n@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.npm.taobao.org/y18n/download/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
-  integrity sha1-bRX7qITAhnnA136I53WegR4H+kE=
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.2.tgz#85c901bd6470ce71fc4bb723ad209b70f7f28696"
+  integrity sha512-uGZHXkHnhF0XeeAPgnKfPv1bgKAYyVvmNL1xlKsPYZPaIHxGti2hHqvOCQv71XMsLxu1QjergkqogUnms5D3YQ==
 
 "y18n@^3.2.1 || ^4.0.0", y18n@^4.0.0:
   version "4.0.0"
